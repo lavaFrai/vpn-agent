@@ -1,0 +1,19 @@
+version: "3.0"
+
+services:
+  3x-api:
+    image: "ghcr.io/mhsanaei/3x-ui:latest"
+    volumes:
+      - $PWD/3x-data/db/:/etc/x-ui/
+      - $PWD/3x-data/cert/:/root/cert/
+    ports:
+      - "443:443"
+
+  server:
+    build: "./server/"
+    links:
+      - "3x-api:3x-api"
+    depends_on:
+      - 3x-api
+    volumes:
+      - $PWD/data:/opt/app/data
