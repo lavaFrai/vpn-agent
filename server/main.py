@@ -146,7 +146,7 @@ async def main():
     ip = requests.get("http://ipwho.is").json()["ip"]
     print(f"Listening on: {ip}")
 
-    await run_server()
+    await run_server(session_secret)
 
     return
 
