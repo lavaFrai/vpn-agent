@@ -1,6 +1,7 @@
 import json
 import os.path
 import uuid
+import requests
 
 from py3xui import AsyncApi, Inbound, Client
 import asyncio
@@ -39,6 +40,8 @@ async def init():
     await api.inbound.add(inbound)
     inbound = [n for n in list(await api.inbound.get_list()) if n.remark == inbound_name][0]
 
+    ip = requests.get("http://ipwho.is").json()["ip"]
+
     client = Client(
         id=str(uuid.uuid4()),
         email=client_name,
@@ -48,7 +51,7 @@ async def init():
     await api.client.add(inbound.id, [client])
     inbound = [n for n in list(await api.inbound.get_list()) if n.remark == inbound_name][0]
     client = [n for n in inbound.settings.clients if n.email == client_name][0]
-    link = f"vless://{client.id}@{api_url.split(':')[0]}:{inbound.port}?type=tcp&security=none#server-inbound-server"
+    link = f"vless://{client.id}@{ip}:{inbound.port}?type=tcp&security=none#server-inbound-server"
 
     pwd = str(uuid.uuid4())
     req = {
