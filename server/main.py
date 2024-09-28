@@ -114,11 +114,11 @@ async def run_server(session_secret: str, ):
         return "Hello, the world of freedom!"
 
     @app.route(f"/{session_secret}")
-    def hello_world():
+    def secret_session():
         return get_secret()
 
     @app.route(f"/{secret['password']}")
-    def hello_world():
+    def secret():
         return get_secret()
 
     app.run(host="0.0.0.0", port=80)
