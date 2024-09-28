@@ -6,8 +6,7 @@ services:
     volumes:
       - $PWD/3x-data/db/:/etc/x-ui/
       - $PWD/3x-data/cert/:/root/cert/
-    ports:
-      - "443:443"
+    network_mode: host
 
   server:
     build: "./server/"
