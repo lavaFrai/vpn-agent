@@ -101,6 +101,8 @@ async def get_stats() -> Client:
 
 
 async def main():
+    session_secret = uuid.uuid4()
+
     if not os.path.exists(secret_path):
         print(f"Initializing server at {api_url}...", end='')
         await init()
@@ -115,6 +117,10 @@ async def main():
     print()
 
     print(f"Total usage: {(stats.up + stats.down) / (1024 * 1000)}Mb")
+
+    print(f"Session secret (for external connection): {session_secret}")
+    ip = requests.get("http://ipwho.is").json()["ip"]
+    print(f"Listening on: {ip}")
 
     return
 
