@@ -112,7 +112,7 @@ async def run_server():
     def hello_world():
         return "<p>Hello, World!</p>"
 
-    app.run(host="0.0.0.0", port="9443")
+    app.run(host="0.0.0.0", port=80)
 
 
 async def main():
