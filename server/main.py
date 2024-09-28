@@ -102,15 +102,24 @@ async def get_stats() -> Client:
     return client
 
 
-async def run_server():
+async def run_server(session_secret: str, ):
     app = Flask(__name__)
     import logging
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
+    secret = get_secret()
 
     @app.route("/")
+    def index():
+        return "Hello, the world of freedom!"
+
+    @app.route(f"/{session_secret}")
     def hello_world():
-        return "<p>Hello, World!</p>"
+        return get_secret()
+
+    @app.route(f"/{secret['password']}")
+    def hello_world():
+        return get_secret()
 
     app.run(host="0.0.0.0", port=80)
 
