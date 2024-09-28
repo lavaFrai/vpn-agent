@@ -17,4 +17,5 @@ services:
       - 3x-api
     volumes:
       - $PWD/data:/opt/app/data
-    network_mode: host
+    ports:
+      - "80:80"
