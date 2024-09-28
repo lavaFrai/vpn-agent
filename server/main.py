@@ -1,6 +1,8 @@
 import json
 import os.path
 import uuid
+
+from flask import Flask
 import requests
 
 from py3xui import AsyncApi, Inbound, Client
@@ -100,6 +102,19 @@ async def get_stats() -> Client:
     return client
 
 
+async def run_server():
+    app = Flask(__name__)
+    import logging
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+
+    @app.route("/")
+    def hello_world():
+        return "<p>Hello, World!</p>"
+
+    app.run(host="0.0.0.0", port="9443")
+
+
 async def main():
     session_secret = uuid.uuid4()
 
@@ -121,6 +136,8 @@ async def main():
     print(f"Session secret (for external connection): {session_secret}")
     ip = requests.get("http://ipwho.is").json()["ip"]
     print(f"Listening on: {ip}")
+
+    await run_server()
 
     return
 
