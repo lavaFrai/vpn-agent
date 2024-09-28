@@ -1,4 +1,4 @@
-FROM 3.10.15-alpine3.19
+FROM python:3.10.15-alpine3.19
 
 COPY . /opt/app
 WORKDIR /opt/app
